@@ -1,3 +1,4 @@
 sqlalchemy
 mysql-connector-python
 
+instalar en la terminal: pip install mysql-connector-python
