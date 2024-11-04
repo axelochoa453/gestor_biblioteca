@@ -1,0 +1,41 @@
+create database biblioteca;
+use biblioteca
+CREATE TABLE Usuarios (
+    Numero_Usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    dni VARCHAR(20),
+    telefono VARCHAR(15),
+    email VARCHAR(50),
+    creado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    estado TINYINT DEFAULT 1
+);
+
+CREATE TABLE Generos (
+    Numero_Genero INT AUTO_INCREMENT PRIMARY KEY,
+    genero VARCHAR(50)
+);
+
+CREATE TABLE Libros (
+    Numero_Libro INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_libro VARCHAR(100),
+    autor VARCHAR(50),
+    fecha_lanzamiento DATE,
+    id_genero INT,
+    creado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    estado TINYINT DEFAULT 1,
+    FOREIGN KEY (id_genero) REFERENCES Generos(Numero_Genero)
+);
+
+CREATE TABLE Prestamos (
+    Numero_Prestamo INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    libro_id INT,
+    fecha_prestamo DATE,
+    fecha_devolucion_estimada DATE,
+    fecha_devolucion_real DATE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(Numero_Usuario),
+    FOREIGN KEY (libro_id) REFERENCES Libros(Numero_Libro)
+);
