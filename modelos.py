@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, TIMESTAMP, SmallInteger
 from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
 from config import Base
 import logging
 logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)

@@ -1,15 +1,28 @@
 #para inciar usar: biblioteca.py
 
-import logging
 from datetime import datetime
 from sqlalchemy import create_engine
-engine = create_engine("mysql+mysqlconnector://usuario:contraseña@localhost/biblioteca", echo=False)
+from sqlalchemy.orm import sessionmaker
+from modelos import Base
+import logging
+engine = create_engine("mysql+mysqlconnector://axel:blackzone4+@localhost/biblioteca", echo=False)
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session= Session()
+sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
+sqlalchemy_logger.setLevel(logging.WARNING)
+for handler in sqlalchemy_logger.handlers:
+    sqlalchemy_logger.removeHandler(handler)
+
+handler = logging.StreamHandler()
+handler.setLevel(logging.WARNING)
+sqlalchemy_logger.addHandler(handler)
+
 from crud import (
     crear_usuario, actualizar_usuario, borrar_usuario, agregar_libro,
     actualizar_libro, borrar_libro, agregar_genero, actualizar_genero,
     crear_prestamo, actualizar_prestamo, ver_libros, ver_generos, ver_prestamos, ver_usuarios
 )
-logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 def menu():
     while True:
